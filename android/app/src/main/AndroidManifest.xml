@@ -3,7 +3,7 @@
         android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
     <application
-        android:label="launch_any_app"
+        android:label="Launch Any App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
