@@ -1,4 +1,5 @@
 import 'package:device_apps/device_apps.dart';
+import 'package:flutter/material.dart';
 
 Future<List<Application>> getDeviceApps() async {
   List<Application> apps = await DeviceApps.getInstalledApplications(
@@ -7,4 +8,11 @@ Future<List<Application>> getDeviceApps() async {
     onlyAppsWithLaunchIntent: true,
   );
   return apps;
+}
+
+Widget? getAppIcon(Application app) {
+  if (app is ApplicationWithIcon) {
+    return Image.memory(app.icon, width: 32, height: 32);
+  }
+  return null;
 }

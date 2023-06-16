@@ -1,7 +1,10 @@
+import 'package:collection/collection.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
-import 'package:launch_any_app/homepage/device_apps.dart';
-import 'package:launch_any_app/layout/container.dart';
+import 'package:launch_any_app/layout/padding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'apps.dart';
 
 class Dropdown extends StatefulWidget {
   const Dropdown({super.key});
@@ -18,22 +21,28 @@ class _DropdownState extends State<Dropdown> {
   // This method is rerun every time setState is called, for instance as done
   // by the _incrementCounter method above.
   Widget build(BuildContext context) {
-    return FutureBuilder<List<DropdownMenuEntry<Application>>>(
-        future: buildDropdonEntries(),
-        builder: (context, AsyncSnapshot<List<DropdownMenuEntry<Application>>> snapshot) {
+    return FutureBuilder<DropdownInfo>(
+        future: buildDropdownEntries(),
+        builder: (context, AsyncSnapshot<DropdownInfo> snapshot) {
           if (snapshot.hasData) {
+            var dropdownInfo = snapshot.data!;
             return Column(
               children: [
                 padded(const Text("Select the Application to be used as Launcher")),
                 DropdownMenu<Application>(
                   width: MediaQuery.of(context).size.width * 0.8,
                   menuHeight: MediaQuery.of(context).size.height * 0.5,
-                  //initialSelection: ColorLabel.green,
-                  controller: appController,
                   label: const Text('App'),
-                  dropdownMenuEntries: snapshot.data!,
+                  dropdownMenuEntries: dropdownInfo.entries,
+                  initialSelection: dropdownInfo.selectedApp,
+                  controller: appController,
                   onSelected: (Application? app) {
-                    setState(() => selectedApp = app);
+                    setState(() {
+                      if (app != null) {
+                        selectedApp = app;
+                        saveSelectedApp(app);
+                      }
+                    });
                   },
                 )
               ],
@@ -45,16 +54,35 @@ class _DropdownState extends State<Dropdown> {
   }
 }
 
-Future<List<DropdownMenuEntry<Application>>> buildDropdonEntries() async {
+class DropdownInfo {
+  final List<DropdownMenuEntry<Application>> entries;
+  final Application? selectedApp;
+
+  const DropdownInfo({
+    required this.entries,
+    required this.selectedApp,
+  });
+}
+
+Future<DropdownInfo> buildDropdownEntries() async {
   final apps = await getDeviceApps();
   final entries =
       apps.map((app) => DropdownMenuEntry(value: app, label: app.appName, leadingIcon: getAppIcon(app))).toList();
-  return entries;
+
+  final selectedAppName = await getSelectedApp();
+  final selectedApp = apps.firstWhereOrNull((app) => app.packageName == selectedAppName);
+
+  return DropdownInfo(entries: entries, selectedApp: selectedApp);
 }
 
-Widget? getAppIcon(Application app) {
-  if (app is ApplicationWithIcon) {
-    return Image.memory(app.icon, width: 32, height: 32);
-  }
-  return null;
+Future<void> saveSelectedApp(Application app) async {
+  final prefs = await SharedPreferences.getInstance();
+
+  await prefs.setString("selectedAppId", app.packageName);
+}
+
+Future<String?> getSelectedApp() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  return prefs.getString("selectedAppId");
 }
