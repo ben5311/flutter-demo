@@ -17,6 +17,10 @@ This app allows setting an arbitrary other app as the default launcher, even if 
 3. Start the virtual Android device.
 4. Execute `flutter run`.
 
+## Build an APK
+
+- Execute `flutter build apk`.
+
 ## References
 
 A few resources to get you started if this is your first Flutter project:
