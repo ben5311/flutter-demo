@@ -1,10 +1,22 @@
-# launch_any_app
+# Launch any App
 
-A new Flutter project.
+This project is a starting point for a Flutter application that targets Android.
 
-## Getting Started
+This app allows setting an arbitrary other app as the default launcher, even if it doesn't have built-in launcher support.
 
-This project is a starting point for a Flutter application.
+- It is declared as a launcher in [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) (`HOME` intent).
+- It displays a simple dropdown menu where you can select the target App.
+- The selected App is persisted after closing the App.
+- On each Home Button press, the target App should be opened (Not yet implemented).
+
+## Getting started
+
+1. Install [Flutter](https://docs.flutter.dev/get-started/install).
+2. Create a new device in Android Studio's [Virtual Device Manager](https://developer.android.com/studio/run/managing-avds).
+3. Start the virtual Android device.
+4. Execute `flutter run`.
+
+## References
 
 A few resources to get you started if this is your first Flutter project:
 
