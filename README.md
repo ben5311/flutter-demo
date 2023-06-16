@@ -7,7 +7,8 @@ This app allows setting an arbitrary other app as the default launcher, even if 
 - It is declared as a launcher in [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) (`HOME` intent).
 - It displays a simple dropdown menu where you can select the target App.
 - The selected App is persisted after closing the App.
-- On each Home Button press, the target App should be opened (Not yet implemented).
+- On each Home Button press, the target App will be opened.
+- Double click the Home Button quickly, to change the target App.
 
 ## Getting started
 

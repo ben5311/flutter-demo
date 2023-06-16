@@ -86,3 +86,12 @@ Future<String?> getSelectedApp() async {
 
   return prefs.getString("selectedAppId");
 }
+
+Future<bool> startSelectedApp() async {
+  var appId = await getSelectedApp();
+  if (appId != null) {
+    startApp(appId);
+    return true;
+  }
+  return false;
+}

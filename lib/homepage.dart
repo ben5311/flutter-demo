@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:launch_any_app/homepage/dropdown.dart';
+import 'package:launch_any_app/homepage/launcher.dart';
 
 // This widget is the home page of your application.
 class MyHomePage extends StatelessWidget {
@@ -24,6 +25,7 @@ class MyHomePage extends StatelessWidget {
           children: [
             SizedBox(height: 50),
             Dropdown(),
+            Launcher(),
           ],
         ),
       ),
