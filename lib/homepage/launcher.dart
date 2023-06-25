@@ -11,12 +11,14 @@ class Launcher extends StatefulWidget {
 
 class _LauncherState extends State<Launcher> with WidgetsBindingObserver {
   int _lastTap = 0;
-  int _threshold = 300;
+  final int _threshold = 500;
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
+    print("INIT STATE");
+    startSelectedApp();
   }
 
   @override

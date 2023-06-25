@@ -18,5 +18,6 @@ Widget? getAppIcon(Application app) {
 }
 
 Future<bool> startApp(String appId) async {
+  print("Starting App $appId");
   return DeviceApps.openApp(appId);
 }

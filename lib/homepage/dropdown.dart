@@ -90,8 +90,7 @@ Future<String?> getSelectedApp() async {
 Future<bool> startSelectedApp() async {
   var appId = await getSelectedApp();
   if (appId != null) {
-    startApp(appId);
-    return true;
+    return await startApp(appId);
   }
   return false;
 }
